@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     //params
     [SerializeField] float moveSpeed = 16f;
     [SerializeField] float padding = 1f;
-    [SerializeField] GameObject laser;
+    [SerializeField] GameObject laserPrefab;
+    [SerializeField] float projectileSpeed = 10f;
     float xMin;
     float xMax;
     float yMin;
@@ -32,7 +33,11 @@ public class Player : MonoBehaviour
     private void Fire()
     {
         if(Input.GetButtonDown("Fire1")){
-            Instantiate(laser, transform.position, Quaternion.identity);
+            GameObject laser = Instantiate(
+                laserPrefab, 
+                transform.position, 
+                Quaternion.identity) as GameObject;
+            laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, projectileSpeed);
         }
     }
 
