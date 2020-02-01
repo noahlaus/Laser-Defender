@@ -9,6 +9,12 @@ public class Player : MonoBehaviour
     //params
     [SerializeField] float moveSpeed = 16f;
     [SerializeField] float padding = 1f;
+    [SerializeField] GameObject laserPrefab;
+    [SerializeField] float projectileSpeed = 10f;
+    [SerializeField] float projectileFiringPeriod = 0.5f;
+
+    Coroutine firingCoroutine;
+
     float xMin;
     float xMax;
     float yMin;
@@ -25,12 +31,35 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
+        Fire();
+    }
+
+    private void Fire()
+    {
+       if(Input.GetButtonDown("Fire1")){
+           firingCoroutine = StartCoroutine(FireContinuously());   
+        }
+       if(Input.GetButtonUp("Fire1")){
+           StopCoroutine(firingCoroutine);
+       }
+    }
+
+    IEnumerator FireContinuously(){ 
+        while (true){
+            GameObject laser = Instantiate(
+                laserPrefab, 
+                transform.position, 
+                Quaternion.identity) as GameObject;
+            laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, projectileSpeed);
+
+        yield return new WaitForSeconds(projectileFiringPeriod);
+        }
     }
 
     /*  The Method SetUpMoveBoundaries determins the min and max on the x and y axis of the camera and
         saves that value to the respective variable.
     */
-      private void SetUpMoveBoundaries()
+    private void SetUpMoveBoundaries()
     {
         Camera gameCamera = Camera.main;
         xMin = gameCamera.ViewportToWorldPoint(new Vector3(0,0,0)).x + padding;
