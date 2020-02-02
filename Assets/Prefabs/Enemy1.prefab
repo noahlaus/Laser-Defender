@@ -92,3 +92,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a02e7f6851343e8a61a90877d02b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
