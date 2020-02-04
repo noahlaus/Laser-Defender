@@ -5,17 +5,32 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] List<WaveConfig> waveConfigs;
-    int startingWave = 0;
+    [SerializeField]int startingWave = 0;
+    [SerializeField] bool looping = false;
 
-
-    void Start()
+    IEnumerator Start()
     {
-        var currentWave = waveConfigs[startingWave];
-        StartCoroutine(SpawnAllEnemiesInWave(currentWave));    
+        do{
+            yield return StartCoroutine(SpawnAllWaves());
+        }
+        while(looping);  
     }
 
-    private IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig){
-       
+    private IEnumerator SpawnAllWaves(){
+        for(int waveindex = startingWave; waveindex < waveConfigs.Count; waveindex++){
+            var currentWave = waveConfigs[waveindex];
+            yield return StartCoroutine(SpawnAllEnemiesInWave(currentWave));
+        }
+    }
+
+    /*
+    //* The function takes a waveconfig file and instanciates a new enemy as long as the max number of
+    //* is not reached.
+    //* then the function sets the right wave in the enemy pathing and makes the coroutine wait 
+    //* before spawning a new enemy according to the wave configuration.
+    */
+
+    private IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig){   
        for(int enemyCount = 0; enemyCount < waveConfig.GetNumberOfEnemies(); enemyCount++){
             var newEnemy = Instantiate(
                 waveConfig.GetEnemyPrefab(),
