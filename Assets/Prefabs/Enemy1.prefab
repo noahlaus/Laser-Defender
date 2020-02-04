@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7642731546451050330}
   - component: {fileID: 7642731546451050333}
   - component: {fileID: -6522712426437052382}
+  - component: {fileID: 4527044053461047806}
+  - component: {fileID: -7050141213447764388}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -92,4 +94,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a02e7f6851343e8a61a90877d02b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints: []
+--- !u!114 &4527044053461047806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7642731546451050332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6d2583e006b14b55a3f8349327504b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+--- !u!58 &-7050141213447764388
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7642731546451050332}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.01976651}
+  serializedVersion: 2
+  m_Radius: 0.40023345
