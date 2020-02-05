@@ -113,6 +113,8 @@ MonoBehaviour:
   projectileSpeed: 10
   projectile: {fileID: 6328649628271558084, guid: be8665e6288334c7e996744e45faef0e,
     type: 3}
+  explosionEffect: {fileID: 8120866830478481115, guid: 00f4f779d46a04fbd8daa69663501c74,
+    type: 3}
 --- !u!58 &-7050141213447764388
 CircleCollider2D:
   m_ObjectHideFlags: 0
