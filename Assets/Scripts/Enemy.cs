@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Config")]
     [SerializeField] float health = 100;
-    [SerializeField] float shotCounter;
+    [SerializeField] int scoreValue = 150;
     [SerializeField] float minTimeBetweenShots = 0.2f;
     [SerializeField] float maxTimeBetweenShots = 3f;
-    [SerializeField] float projectileSpeed = 10f;
-    [SerializeField] GameObject projectile;
+    
+    [Header("Audio")]
     [SerializeField] GameObject explosionEffect;
     [SerializeField] float explosionDuration = 1f;
+    [SerializeField] AudioClip deathSFX;
+    [SerializeField] [Range(0,1)] float deathVolume = 0.7f;
+    [SerializeField] AudioClip shootSound;
+    [SerializeField] [Range(0,1)] float shootVolume = 0.25f;
+
+    [Header("Movement")]
+    [SerializeField] float projectileSpeed = 10f;
+    float shotCounter;
+    [SerializeField] GameObject projectile;
+    
     void Start()
     {
         shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);   
@@ -36,6 +47,7 @@ public class Enemy : MonoBehaviour
                 transform.position, 
                 Quaternion.identity) as GameObject;
             laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -projectileSpeed);
+            AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position, shootVolume);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -59,11 +71,13 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        FindObjectOfType<GameSession>().AddToScore(scoreValue);
         Destroy(gameObject);
         GameObject explosion = Instantiate(
             explosionEffect,
             transform.position,
             transform.rotation) as GameObject;
         Destroy(explosion, explosionDuration);
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathVolume);
     }
 }
